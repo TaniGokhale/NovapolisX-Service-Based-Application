@@ -1,25 +1,85 @@
 import { useState } from "react";
-import API from "../services/api.js";
+import API from "../services/api";
+import "../styles/modal.css";
 
-function Login() {
+function Login({ closeModal, openRegister }) {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
- const handleLogin = async () => {
-  const res = await API.post("/auth/login", { email, password });
+  const handleLogin = async () => {
 
-  console.log(res.data);
+    try {
 
-  localStorage.setItem("token", res.data.token);
-  alert("Login Success");
-};
+      const res = await API.post("/auth/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+
+      alert(res.data.msg);
+
+      window.location.href = "/home";
+
+    } catch (error) {
+
+      alert(error.response.data.msg);
+
+    }
+  };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
+
+    <div className="modal-overlay">
+
+      <div className="modal-box">
+
+        <button
+          className="close-btn"
+          onClick={closeModal}
+        >
+          ×
+        </button>
+
+        <h2>Welcome Back</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          className="submit-btn"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+
+        <p className="switch-text">
+
+          New User?
+
+          <span
+            onClick={() => {
+              closeModal();
+              openRegister();
+            }}
+          >
+            Register
+          </span>
+
+        </p>
+
+      </div>
+
     </div>
   );
 }
