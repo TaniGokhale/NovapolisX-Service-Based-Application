@@ -1,13 +1,41 @@
-const { getPlaces } = require("../services/googlePlacesService");
+const axios = require("axios");
 
-exports.getAllPlaces = async (req, res) => {
+exports.getPlaces = async (req, res) => {
+
   try {
-    const { type } = req.query;
 
-    const data = await getPlaces(type);
+    const { type } = req.params;
 
-    res.json(data);
+    const query = `
+[out:json];
+
+area["name"="Nagpur"]->.searchArea;
+
+(
+  node["amenity"="${type}"](area.searchArea);
+  way["amenity"="${type}"](area.searchArea);
+  relation["amenity"="${type}"](area.searchArea);
+);
+
+out center;
+`;
+
+    const response = await axios.post(
+
+      "https://overpass-api.de/api/interpreter?data=" +
+      encodeURIComponent(query)
+
+    );
+
+    res.json(response.data.elements);
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+
+    console.log(error.message);
+
+    res.status(500).json({
+      error: error.message
+    });
+
   }
 };
