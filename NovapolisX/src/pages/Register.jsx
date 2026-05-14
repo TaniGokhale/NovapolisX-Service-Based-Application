@@ -1,11 +1,15 @@
 import { useState } from "react";
+
 import API from "../services/api";
+
 import "../styles/modal.css";
 
 function Register({ closeModal, openLogin }) {
 
   const [name, setName] = useState("");
+
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
@@ -20,7 +24,7 @@ function Register({ closeModal, openLogin }) {
 
       localStorage.setItem("token", res.data.token);
 
-      alert(res.data.msg);
+      alert("Registration Success");
 
       window.location.href = "/home";
 
@@ -44,23 +48,25 @@ function Register({ closeModal, openLogin }) {
           ×
         </button>
 
-        <h2>Create Account</h2>
+        <h2>
+          Create Account
+        </h2>
 
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Enter Name"
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -72,7 +78,8 @@ function Register({ closeModal, openLogin }) {
         </button>
 
         <p className="switch-text">
-          Already Registered?
+
+          Already Registered ?
 
           <span
             onClick={() => {

@@ -1,10 +1,13 @@
 import { useState } from "react";
+
 import API from "../services/api";
+
 import "../styles/modal.css";
 
 function Login({ closeModal, openRegister }) {
 
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
@@ -18,7 +21,7 @@ function Login({ closeModal, openRegister }) {
 
       localStorage.setItem("token", res.data.token);
 
-      alert(res.data.msg);
+      alert("Login Success");
 
       window.location.href = "/home";
 
@@ -42,17 +45,19 @@ function Login({ closeModal, openRegister }) {
           ×
         </button>
 
-        <h2>Welcome Back</h2>
+        <h2>
+          Welcome Back
+        </h2>
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -65,7 +70,7 @@ function Login({ closeModal, openRegister }) {
 
         <p className="switch-text">
 
-          New User?
+          New User ?
 
           <span
             onClick={() => {

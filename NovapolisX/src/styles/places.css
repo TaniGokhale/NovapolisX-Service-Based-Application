@@ -1,62 +1,175 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#050816;
+  font-family:Arial, sans-serif;
+  overflow-x:hidden;
+}
+
 .places-page{
   width:100%;
   min-height:100vh;
-
   background:#050816;
+  color:white;
+}
+
+/* HERO */
+
+.places-hero{
+  width:100%;
+  height:70vh;
+  position:relative;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  overflow:hidden;
+}
+
+.places-bg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.places-overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    135deg,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.4)
+  );
+}
+
+.places-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:20px;
+}
+
+.places-content h1{
+  font-size:75px;
+}
+
+.places-content span{
+  color:#ffd54f;
+
+  text-shadow:
+  0 0 15px #ffd54f;
+}
+
+.places-content p{
+  margin-top:20px;
+  font-size:22px;
+  color:#d4d4d4;
+}
+
+/* SEARCH */
+
+.search-box{
+  margin-top:35px;
+}
+
+.search-box input{
+  width:500px;
+  max-width:90%;
+
+  padding:18px 25px;
+
+  border:none;
+
+  border-radius:50px;
+
+  outline:none;
+
+  background:
+  rgba(255,255,255,0.08);
 
   color:white;
 
-  padding:40px;
+  font-size:16px;
+
+  backdrop-filter:blur(10px);
+
+  border:
+  1px solid rgba(255,255,255,0.1);
 }
 
-.places-page h1{
+.search-box input::placeholder{
+  color:#ddd;
+}
+
+/* CATEGORY */
+
+.categories-section{
+  padding:80px 20px 40px;
   text-align:center;
+}
 
-  font-size:55px;
-
+.categories-section h2{
+  font-size:48px;
   margin-bottom:40px;
 
   color:#00e5ff;
+
+  text-shadow:
+  0 0 12px #00e5ff;
 }
 
-.category-buttons{
+.categories{
   display:flex;
-
   justify-content:center;
-
   flex-wrap:wrap;
-
   gap:20px;
-
-  margin-bottom:50px;
 }
 
-.category-buttons button{
+.categories button{
   padding:14px 30px;
 
   border:none;
 
-  border-radius:30px;
-
-  background:rgba(255,255,255,0.08);
-
-  color:white;
+  border-radius:40px;
 
   cursor:pointer;
 
-  backdrop-filter:blur(10px);
+  background:
+  rgba(255,255,255,0.08);
 
-  transition:0.3s;
+  color:white;
 
   font-size:16px;
+
+  transition:0.3s;
 }
 
-.category-buttons button:hover{
-  background:#00e5ff;
+.categories button:hover{
+  transform:translateY(-4px);
 
-  color:black;
+  box-shadow:
+  0 0 15px #00e5ff;
+}
 
-  transform:translateY(-5px);
+.active-category{
+  background:#ffd54f !important;
+  color:black !important;
+  font-weight:bold;
+}
+
+/* GRID */
+
+.places-grid-section{
+  padding:40px 80px 100px;
 }
 
 .places-grid{
@@ -65,17 +178,23 @@
   grid-template-columns:
   repeat(auto-fit,minmax(320px,1fr));
 
-  gap:30px;
+  gap:35px;
 }
 
-.place-card{
-  background:rgba(255,255,255,0.08);
+/* CARD */
 
-  border-radius:20px;
+.place-card{
+  background:
+  rgba(255,255,255,0.06);
+
+  border-radius:25px;
 
   overflow:hidden;
 
   backdrop-filter:blur(10px);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
 
   transition:0.4s;
 }
@@ -89,9 +208,7 @@
 
 .place-card img{
   width:100%;
-
-  height:250px;
-
+  height:240px;
   object-fit:cover;
 }
 
@@ -99,46 +216,76 @@
   padding:25px;
 }
 
-.place-info h2{
-  margin-bottom:10px;
+.place-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.place-top h3{
+  font-size:26px;
+  color:#ffd54f;
+}
+
+.place-top span{
+  background:#00e5ff;
+  color:black;
+
+  padding:8px 14px;
+
+  border-radius:20px;
+
+  font-weight:bold;
 }
 
 .place-info p{
-  color:#00e5ff;
-
-  margin-bottom:15px;
-}
-
-.place-info span{
+  margin-top:15px;
   color:#d4d4d4;
-
   line-height:1.7;
 }
 
 .place-info button{
   margin-top:25px;
 
-  padding:12px 25px;
+  padding:14px 30px;
 
   border:none;
 
-  border-radius:10px;
+  border-radius:40px;
 
-  background:#00e5ff;
+  background:#ffd54f;
+
+  color:black;
+
+  font-weight:bold;
 
   cursor:pointer;
 
-  font-weight:bold;
+  transition:0.3s;
 }
+
+.place-info button:hover{
+  transform:translateY(-4px);
+}
+
+/* RESPONSIVE */
 
 @media(max-width:768px){
 
-  .places-page{
-    padding:20px;
+  .places-content h1{
+    font-size:42px;
   }
 
-  .places-page h1{
-    font-size:38px;
+  .places-content p{
+    font-size:16px;
+  }
+
+  .categories-section h2{
+    font-size:34px;
+  }
+
+  .places-grid-section{
+    padding:40px 20px 80px;
   }
 
 }

@@ -1,49 +1,56 @@
 import { useState } from "react";
-import "../styles/landing.css";
 
-import Register from "./Register";
 import Login from "./Login";
+import Register from "./Register";
+
+import "../styles/landing.css";
 
 function Landing() {
 
-  const [showRegister, setShowRegister] = useState(false);
-
   const [showLogin, setShowLogin] = useState(false);
+
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
 
-    <div className="landing">
+    <div className="landing-page">
 
       <img
         src="https://i.pinimg.com/originals/45/d0/79/45d0790c293e5dba3077f4ad0c4826c6.gif"
-        alt="bg"
-        className="bg-gif"
+        alt=""
+        className="landing-bg"
       />
 
-      <div className="overlay"></div>
+      <div className="landing-overlay"></div>
 
-      <nav className="navbar">
+      <div className="floating glow1"></div>
+      <div className="floating glow2"></div>
 
-        <div className="logo-section">
+      <nav className="landing-navbar">
 
-          <div className="logo-text">
-            <h2>NovapolisX</h2>
-            <p>Nagpur Smart City</p>
-          </div>
+        <div className="logo-area">
+
+          <h1>
+            NovapolisX
+          </h1>
+
+          <p>
+            Smart Nagpur City
+          </p>
 
         </div>
 
-        <div className="nav-links">
+        <div className="nav-buttons">
 
           <button
-            className="nav-btn login-btn"
+            className="login-btn"
             onClick={() => setShowLogin(true)}
           >
             Login
           </button>
 
           <button
-            className="nav-btn register-btn"
+            className="register-btn"
             onClick={() => setShowRegister(true)}
           >
             Register
@@ -53,83 +60,126 @@ function Landing() {
 
       </nav>
 
-      <div className="hero-content">
+      <section className="hero-section">
 
-        <h1 className="hero-title">
-          Explore <span>Nagpur</span>
-        </h1>
+        <div className="hero-left">
 
-        <p className="hero-subtitle">
-          Discover places, events, hospitals,
-          colleges and everything happening in your city.
-        </p>
+          <h1>
+            Experience The
+            <span> Smart Future</span>
+            Of Nagpur
+          </h1>
 
-        <div className="hero-buttons">
+          <p>
+            Explore tourist places, hospitals,
+            restaurants, events and futuristic
+            city services in one powerful platform.
+          </p>
 
-          <button
-            className="main-btn"
-            onClick={() => setShowLogin(true)}
-          >
-            Start Exploring
-          </button>
+          <div className="hero-buttons">
 
-        </div>
+            <button
+              className="start-btn"
+              onClick={() => setShowLogin(true)}
+            >
+              Start Exploring
+            </button>
 
-      </div>
+            <button
+              className="glass-btn"
+            >
+              Discover More
+            </button>
 
-      <div className="preview-section">
-
-        <h2>
-          Smart City Features
-        </h2>
-
-        <div className="cards">
-
-          <div className="card">
-            <h3>Live Events</h3>
-            <p>
-              Discover concerts, festivals and city events.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3>Hospitals</h3>
-            <p>
-              Find top healthcare services nearby.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3>Colleges</h3>
-            <p>
-              Explore educational institutions in Nagpur.
-            </p>
-          </div>
-
-          <div className="card blur-card">
-            <h3>Bookings & Maps</h3>
-            <p>
-              Login to unlock premium smart services.
-            </p>
           </div>
 
         </div>
 
-      </div>
+        <div className="hero-right">
 
-      {
-        showRegister &&
-        <Register
-          closeModal={() => setShowRegister(false)}
-          openLogin={() => setShowLogin(true)}
-        />
-      }
+          <div className="glass-card">
+
+            <h2>
+              Smart City Features
+            </h2>
+
+            <div className="feature-list">
+
+              <div className="feature-item">
+                Live Events
+              </div>
+
+              <div className="feature-item">
+                Tourist Places
+              </div>
+
+              <div className="feature-item">
+                Hospitals
+              </div>
+
+              <div className="feature-item">
+                Restaurants
+              </div>
+
+              <div className="feature-item">
+                Smart Navigation
+              </div>
+
+              <div className="feature-item">
+                City Services
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section className="stats-section">
+
+        <div className="stat-box">
+          <h2>200+</h2>
+          <p>Places</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>50+</h2>
+          <p>Events</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>120+</h2>
+          <p>Hospitals</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>80+</h2>
+          <p>Restaurants</p>
+        </div>
+
+      </section>
 
       {
         showLogin &&
         <Login
           closeModal={() => setShowLogin(false)}
-          openRegister={() => setShowRegister(true)}
+          openRegister={() => {
+            setShowLogin(false);
+            setShowRegister(true);
+          }}
+        />
+      }
+
+      {
+        showRegister &&
+        <Register
+          closeModal={() => setShowRegister(false)}
+          openLogin={() => {
+            setShowRegister(false);
+            setShowLogin(true);
+          }}
         />
       }
 

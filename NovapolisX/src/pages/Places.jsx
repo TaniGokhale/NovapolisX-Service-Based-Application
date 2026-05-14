@@ -1,6 +1,12 @@
 import { useState } from "react";
 
+import {
+  useNavigate,
+  useLocation
+} from "react-router-dom";
+
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 import placesData from "../data/placesData";
 
@@ -8,7 +14,36 @@ import "../styles/places.css";
 
 function Places() {
 
-  const [category, setCategory] = useState("hospitals");
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const queryParams =
+    new URLSearchParams(location.search);
+
+  const categoryFromURL =
+    queryParams.get("category");
+
+  const [selectedCategory, setSelectedCategory]
+  = useState(categoryFromURL || "All");
+
+  const categories = [
+    "All",
+    "Hospital",
+    "Restaurant",
+    "Tourist",
+    "College",
+    "School",
+    "Hotel"
+  ];
+
+  const filteredPlaces =
+    selectedCategory === "All"
+    ? placesData
+    : placesData.filter(
+        (item) =>
+          item.category === selectedCategory
+      );
 
   return (
 
@@ -16,71 +51,131 @@ function Places() {
 
       <Navbar />
 
-      <h1>
-        Explore Nagpur
-      </h1>
+      <section className="places-hero">
 
-      <div className="category-buttons">
+        <img
+          src="https://i.pinimg.com/originals/45/d0/79/45d0790c293e5dba3077f4ad0c4826c6.gif"
+          alt=""
+          className="places-bg"
+        />
 
-        <button onClick={() => setCategory("hospitals")}>
-          Hospitals
-        </button>
+        <div className="places-overlay"></div>
 
-        <button onClick={() => setCategory("colleges")}>
-          Colleges
-        </button>
+        <div className="places-content">
 
-        <button onClick={() => setCategory("restaurants")}>
-          Restaurants
-        </button>
+          <h1>
+            Explore Smart
+            <span> Nagpur City</span>
+          </h1>
 
-        <button onClick={() => setCategory("touristPlaces")}>
-          Tourist Places
-        </button>
+          <p>
+            Discover restaurants,
+            hospitals, colleges,
+            tourist places and more.
+          </p>
 
-      </div>
+          <div className="search-box">
 
-      <div className="places-grid">
+            <input
+              type="text"
+              placeholder="Search places..."
+            />
 
-        {
-          placesData[category].map((place) => (
+          </div>
 
-            <div
-              className="place-card"
-              key={place.id}
-            >
+        </div>
 
-              <img
-                src={place.image}
-                alt=""
-              />
+      </section>
 
-              <div className="place-info">
+      <section className="categories-section">
 
-                <h2>
-                  {place.name}
-                </h2>
+        <h2>
+          Explore Categories
+        </h2>
 
-                <p>
-                  {place.location}
-                </p>
+        <div className="categories">
 
-                <span>
-                  {place.description}
-                </span>
+          {
+            categories.map((cat,index) => (
 
-                <button>
-                  Explore
-                </button>
+              <button
+                key={index}
+
+                className={
+                  selectedCategory === cat
+                  ? "active-category"
+                  : ""
+                }
+
+                onClick={() =>
+                  setSelectedCategory(cat)
+                }
+              >
+                {cat}
+              </button>
+
+            ))
+          }
+
+        </div>
+
+      </section>
+
+      <section className="places-grid-section">
+
+        <div className="places-grid">
+
+          {
+            filteredPlaces.map((place) => (
+
+              <div
+                className="place-card"
+                key={place.id}
+              >
+
+                <img
+                  src={place.image}
+                  alt={place.name}
+                />
+
+                <div className="place-info">
+
+                  <div className="place-top">
+
+                    <h3>
+                      {place.name}
+                    </h3>
+
+                    <span>
+                      ⭐ {place.rating}
+                    </span>
+
+                  </div>
+
+                  <p>
+                    {place.location}
+                  </p>
+
+                  <button
+                    onClick={() =>
+                      navigate(`/place/${place.id}`)
+                    }
+                  >
+                    Explore
+                  </button>
+
+                </div>
 
               </div>
 
-            </div>
+            ))
+          }
 
-          ))
-        }
+        </div>
 
-      </div>
+      </section>
+
+      <Footer />
 
     </div>
   );

@@ -1,16 +1,53 @@
-import { Link } from "react-router-dom";
-import "../styles/navbar.css"
-function Navbar() {
-  return (
-    <nav style={{ padding: "10px", background: "#222", color: "#fff" }}>
-      <h2>Nagpur City</h2>
+import { Link, useNavigate } from "react-router-dom";
 
-      <div>
-        <Link to="/">Home</Link> |
-        <Link to="/places">Places</Link> |
-        <Link to="/events">Events</Link> |
-        <Link to="/bookings">Bookings</Link>
+import "../styles/navbar.css";
+
+function Navbar() {
+
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+
+    localStorage.removeItem("token");
+
+    navigate("/");
+  };
+
+  return (
+
+    <nav className="navbar">
+
+      <div className="nav-logo">
+
+        <h2>
+          NovapolisX
+        </h2>
+
       </div>
+
+      <div className="nav-links">
+
+        <Link to="/home">
+          Home
+        </Link>
+
+        <Link to="/places">
+          Explore
+        </Link>
+
+        <Link to="/places">
+          Smart Services
+        </Link>
+
+        <button
+          className="logout-btn"
+          onClick={logoutHandler}
+        >
+          Logout
+        </button>
+
+      </div>
+
     </nav>
   );
 }
