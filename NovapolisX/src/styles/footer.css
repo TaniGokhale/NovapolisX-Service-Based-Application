@@ -100,3 +100,29 @@
   }
 
 }
+.contact-link{
+  color:#ffd54f;
+
+  font-size:22px;
+
+  font-weight:bold;
+
+  text-decoration:none;
+
+  margin-bottom:15px;
+
+  display:inline-block;
+}
+.contact-link{
+  color:#ffd54f;
+
+  font-size:24px;
+
+  font-weight:bold;
+
+  text-decoration:none;
+
+  display:inline-block;
+
+  margin-bottom:18px;
+}

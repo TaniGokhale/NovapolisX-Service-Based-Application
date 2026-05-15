@@ -27,6 +27,9 @@ function Places() {
   const [selectedCategory, setSelectedCategory]
   = useState(categoryFromURL || "All");
 
+  const [searchTerm, setSearchTerm]
+  = useState("");
+
   const categories = [
     "All",
     "Hospital",
@@ -38,12 +41,23 @@ function Places() {
   ];
 
   const filteredPlaces =
-    selectedCategory === "All"
-    ? placesData
-    : placesData.filter(
-        (item) =>
-          item.category === selectedCategory
+    placesData.filter((item) => {
+
+      const matchesCategory =
+        selectedCategory === "All"
+        || item.category === selectedCategory;
+
+      const matchesSearch =
+        item.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      return (
+        matchesCategory &&
+        matchesSearch
       );
+
+    });
 
   return (
 
@@ -79,6 +93,10 @@ function Places() {
             <input
               type="text"
               placeholder="Search places..."
+              value={searchTerm}
+              onChange={(e) =>
+                setSearchTerm(e.target.value)
+              }
             />
 
           </div>
@@ -126,49 +144,63 @@ function Places() {
         <div className="places-grid">
 
           {
-            filteredPlaces.map((place) => (
+            filteredPlaces.length > 0 ? (
 
-              <div
-                className="place-card"
-                key={place.id}
-              >
+              filteredPlaces.map((place) => (
 
-                <img
-                  src={place.image}
-                  alt={place.name}
-                />
+                <div
+                  className="place-card"
+                  key={place.id}
+                >
 
-                <div className="place-info">
+                  <img
+                    src={place.image}
+                    alt={place.name}
+                  />
 
-                  <div className="place-top">
+                  <div className="place-info">
 
-                    <h3>
-                      {place.name}
-                    </h3>
+                    <div className="place-top">
 
-                    <span>
-                      ⭐ {place.rating}
-                    </span>
+                      <h3>
+                        {place.name}
+                      </h3>
+
+                      <span>
+                        ⭐ {place.rating}
+                      </span>
+
+                    </div>
+
+                    <p>
+                      {place.location}
+                    </p>
+
+                    <button
+                      onClick={() =>
+                        navigate(`/place/${place.id}`)
+                      }
+                    >
+                      Explore
+                    </button>
 
                   </div>
 
-                  <p>
-                    {place.location}
-                  </p>
-
-                  <button
-                    onClick={() =>
-                      navigate(`/place/${place.id}`)
-                    }
-                  >
-                    Explore
-                  </button>
-
                 </div>
+
+              ))
+
+            ) : (
+
+              <div className="no-results">
+
+                <h2>
+                  No Places Found
+                </h2>
 
               </div>
 
-            ))
+            )
           }
 
         </div>

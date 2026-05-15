@@ -35,7 +35,7 @@ function Navbar() {
           Explore
         </Link>
 
-        <Link to="/places">
+        <Link to="/smart-services">
           Smart Services
         </Link>
 

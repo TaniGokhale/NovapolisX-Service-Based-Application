@@ -4,7 +4,10 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Places from "./pages/Places";
 import PlaceDetails from "./pages/PlacesDetails";
-
+import SmartServices from "./pages/SmartServices";
+import Events from "./pages/Event";
+import Contack from "./pages/Contack";
+import Booking from "./pages/Booking";
 function App() {
 
   return (
@@ -32,8 +35,26 @@ function App() {
           path="/place/:id"
           element={<PlaceDetails />}
         />
+<Route
+  path="/smart-services"
+  element={<SmartServices />}
+/>
+<Route
+  path="/events"
+  element={<Events/>}
+/>
 
+<Route
+  path="/booking"
+  element={<Booking />}
+/>
+
+<Route
+  path="/contact"
+  element={<Contack />}
+/>
       </Routes>
+      
 
     </BrowserRouter>
 

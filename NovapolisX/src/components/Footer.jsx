@@ -46,7 +46,7 @@ function Footer() {
             Explore City
           </Link>
 
-          <Link to="/places">
+          <Link to="/smart-services">
             Smart Services
           </Link>
 
@@ -78,23 +78,26 @@ function Footer() {
 
         <div className="footer-contact">
 
-          <h3>
-            Contact
-          </h3>
+  <Link
+    to="/contact"
+    className="contact-link"
+  >
+    Contact
+  </Link>
 
-          <p>
-            Nagpur, Maharashtra
-          </p>
+  <p>
+    Nagpur, Maharashtra
+  </p>
 
-          <p>
-            support@novapolisx.com
-          </p>
+  <p>
+    support@novapolisx.com
+  </p>
 
-          <p>
-            +91 7559227187
-          </p>
+  <p>
+    +91 7559227187
+  </p>
 
-        </div>
+</div>
 
       </div>
 

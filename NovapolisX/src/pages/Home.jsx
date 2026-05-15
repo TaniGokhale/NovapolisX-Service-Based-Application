@@ -51,7 +51,7 @@ function Home() {
               Explore City
             </button>
 
-            <button className="glass-btn">
+            <button className="glass-btn"  onClick={() => navigate("/events")}>
               Live Events
             </button>
 
@@ -111,9 +111,9 @@ function Home() {
             </p>
           </div>
 
-          <div className="feature-card">
+          <div className="feature-card"  onClick={() => navigate("/events")}>
 
-            <h3>Live Events</h3>
+            <h3  onClick={() => navigate("/events")} >Live Events</h3>
 
             <p>
               Explore concerts,
@@ -180,7 +180,7 @@ function Home() {
           <p>Hospitals</p>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card"  onClick={() => navigate("/events")}>
           <h2>50+</h2>
           <p>Events</p>
         </div>

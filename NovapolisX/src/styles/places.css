@@ -289,3 +289,14 @@ body{
   }
 
 }
+
+.no-results{
+  width:100%;
+  padding:80px;
+  text-align:center;
+}
+
+.no-results h2{
+  color:#ffd54f;
+  font-size:40px;
+}
