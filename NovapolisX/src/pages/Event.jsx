@@ -15,12 +15,33 @@ function Event() {
   const [selectedEvent,setSelectedEvent]
   = useState(null);
 
+  const [showSubmitForm,setShowSubmitForm]
+  = useState(false);
+
+  const [submitted,setSubmitted]
+  = useState(false);
+
   const filteredEvents =
   selectedStatus === "All"
   ? eventsData
   : eventsData.filter(
       (event) => event.status === selectedStatus
     );
+
+  function handleSubmit(e){
+
+    e.preventDefault();
+
+    setSubmitted(true);
+
+    setTimeout(() => {
+
+      setSubmitted(false);
+
+      setShowSubmitForm(false);
+
+    },3000);
+  }
 
   return (
 
@@ -51,7 +72,9 @@ function Event() {
             and futuristic city experiences.
           </p>
 
-          <button>
+          <button
+            onClick={() => setShowSubmitForm(true)}
+          >
             Submit Your Event
           </button>
 
@@ -96,71 +119,120 @@ function Event() {
         <div className="events-grid">
 
           {
-            filteredEvents.map((event) => (
+            filteredEvents.map((event) => {
 
-              <div
-                className="event-card"
-                key={event.id}
-              >
+              const bookedData =
+              JSON.parse(
+                localStorage.getItem("bookedEvents")
+              )?.find(
+                (item) => item.eventId === event.id
+              );
 
-                <img
-                  src={event.image}
-                  alt={event.title}
-                />
+              return (
 
-                <div className="event-info">
+                <div
+                  className="event-card"
+                  key={event.id}
+                >
 
-                  <div className="event-top">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                  />
 
-                    <span className={`status ${event.status}`}>
-                      {event.status}
-                    </span>
+                  <div className="event-info">
 
-                    <span>
-                      {event.price}
-                    </span>
+                    <div className="event-top">
 
-                  </div>
+                      <span className={`status ${event.status}`}>
+                        {event.status}
+                      </span>
 
-                  <h2>
-                    {event.title}
-                  </h2>
+                      <span>
+                        {event.price}
+                      </span>
 
-                  <p>
-                    📍 {event.location}
-                  </p>
+                    </div>
 
-                  <p>
-                    📅 {event.date}
-                  </p>
+                    <h2>
+                      {event.title}
+                    </h2>
 
-                  <p>
-                    ⏰ {event.time}
-                  </p>
+                    <p>
+                      📍 {event.location}
+                    </p>
 
-                  <p className="event-desc">
-                    {event.description}
-                  </p>
+                    <p>
+                      📅 {event.date}
+                    </p>
 
-                  <div className="event-buttons">
+                    <p>
+                      ⏰ {event.time}
+                    </p>
 
-                    <button>
-                      Book Ticket
-                    </button>
+                    <p className="event-desc">
+                      {event.description}
+                    </p>
 
-                    <button
-                      className="glass-btn"
-                      onClick={() => setSelectedEvent(event)}
-                    >
-                      View Details
-                    </button>
+                    <div className="event-buttons">
+
+                      {
+                        bookedData
+
+                        ?
+
+                        <button
+                          className="booked-btn"
+                          onClick={() => {
+
+                            setSelectedEvent({
+
+                              ...event,
+
+                              bookedData
+
+                            });
+                          }}
+                        >
+                          Booked ✅
+                        </button>
+
+                        :
+
+                        <a
+                          href={`/booking?id=${event.id}&title=${event.title}`}
+                        >
+
+                          <button>
+                            Book Ticket
+                          </button>
+
+                        </a>
+                      }
+
+                      <button
+                        className="glass-btn"
+                        onClick={() => {
+
+                          setSelectedEvent({
+
+                            ...event,
+
+                            bookedData
+
+                          });
+                        }}
+                      >
+                        View Details
+                      </button>
+
+                    </div>
 
                   </div>
 
                 </div>
-
-              </div>
-            ))
+              );
+            })
           }
 
         </div>
@@ -181,7 +253,9 @@ function Event() {
             before publishing.
           </p>
 
-          <button>
+          <button
+            onClick={() => setShowSubmitForm(true)}
+          >
             Submit Event Request
           </button>
 
@@ -234,26 +308,159 @@ function Event() {
                   🎟 {selectedEvent.price}
                 </p>
 
+                {
+                  selectedEvent.bookedData && (
+
+                    <div className="pass-preview">
+
+                      <h3>
+                        Your Event Pass 🎉
+                      </h3>
+
+                      <p>
+                        Booking ID:
+                        {selectedEvent.bookedData.bookingId}
+                      </p>
+
+                      <p>
+                        Tickets:
+                        {selectedEvent.bookedData.quantity}
+                      </p>
+
+                      <p>
+                        Name:
+                        {selectedEvent.bookedData.name}
+                      </p>
+
+                    </div>
+                  )
+                }
+
               </div>
 
               <div className="modal-buttons">
 
-               <a href="/booking">
-  <button>
-    Book Ticket
-  </button>
-</a>
+                {
+                  selectedEvent.bookedData
+
+                  ?
+
+                  <button className="booked-btn">
+                    Booked ✅
+                  </button>
+
+                  :
+
+                  <a
+                    href={`/booking?id=${selectedEvent.id}&title=${selectedEvent.title}`}
+                  >
+
+                    <button>
+                      Book Ticket
+                    </button>
+
+                  </a>
+                }
 
                 <a
                   href={`https://maps.google.com/?q=${selectedEvent.location}`}
                   target="_blank"
                 >
+
                   <button className="glass-btn">
                     Navigate
                   </button>
+
                 </a>
 
               </div>
+
+            </div>
+
+          </div>
+        )
+      }
+
+      {
+        showSubmitForm && (
+
+          <div className="event-modal">
+
+            <div className="event-modal-box submit-form-box">
+
+             <button
+  className="close-modal"
+  onClick={() => setSelectedEvent(null)}
+>
+  ✕
+</button>
+
+              <h2>
+                Submit Event Request
+              </h2>
+
+              <form
+                className="submit-event-form"
+                onSubmit={handleSubmit}
+              >
+
+                <input
+                  type="text"
+                  placeholder="Event Title"
+                  required
+                />
+
+                <input
+                  type="text"
+                  placeholder="Event Image URL"
+                  required
+                />
+
+                <input
+                  type="text"
+                  placeholder="Location"
+                  required
+                />
+
+                <input
+                  type="date"
+                  required
+                />
+
+                <input
+                  type="text"
+                  placeholder="Organizer Name"
+                  required
+                />
+
+                <textarea
+                  placeholder="Event Description"
+                  required
+                ></textarea>
+
+                <button type="submit">
+                  Submit Request
+                </button>
+
+              </form>
+
+              {
+                submitted && (
+
+                  <div className="submit-success-message">
+
+                    <h3>
+                      Event Request Submitted 🎉
+                    </h3>
+
+                    <p>
+                      Your request is now
+                      under admin verification.
+                    </p>
+
+                  </div>
+                )
+              }
 
             </div>
 

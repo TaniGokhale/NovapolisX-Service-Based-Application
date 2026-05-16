@@ -1,11 +1,26 @@
 import { useState } from "react";
 
+import { QRCodeCanvas }
+from "qrcode.react";
+
+import { useSearchParams }
+from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 import "../styles/booking.css";
 
 function Booking() {
+
+  const [searchParams]
+  = useSearchParams();
+
+  const eventId =
+  searchParams.get("id");
+
+  const eventTitle =
+  searchParams.get("title");
 
   const [formData,setFormData]
   = useState({
@@ -17,8 +32,14 @@ function Booking() {
 
   });
 
-  const [success,setSuccess]
+  const [showTicket,setShowTicket]
   = useState(false);
+
+  const bookingId =
+  "NPX" +
+  Math.floor(
+    Math.random() * 999999
+  );
 
   function handleChange(e){
 
@@ -36,16 +57,37 @@ function Booking() {
 
     e.preventDefault();
 
-    setSuccess(true);
+    const bookingData = {
 
-    setFormData({
+      eventId:Number(eventId),
 
-      name:"",
-      email:"",
-      phone:"",
-      quantity:""
+      bookingId,
 
-    });
+      eventTitle,
+
+      ...formData
+
+    };
+
+    const existingBookings =
+    JSON.parse(
+      localStorage.getItem("bookedEvents")
+    ) || [];
+
+    localStorage.setItem(
+
+      "bookedEvents",
+
+      JSON.stringify([
+
+        ...existingBookings,
+
+        bookingData
+
+      ])
+    );
+
+    setShowTicket(true);
   }
 
   return (
@@ -78,7 +120,7 @@ function Booking() {
         <div className="booking-box">
 
           <h2>
-            Book Your Ticket 🎟
+            {eventTitle}
           </h2>
 
           <form onSubmit={handleSubmit}>
@@ -120,32 +162,88 @@ function Booking() {
             />
 
             <button type="submit">
-              Confirm Booking
+              Payment Done
             </button>
 
           </form>
 
-          {
-            success && (
-
-              <div className="success-message">
-
-                <h3>
-                  Your ticket has been confirmed 🎉
-                </h3>
-
-                <p>
-                  Confirmation details
-                  have been sent successfully.
-                </p>
-
-              </div>
-            )
-          }
-
         </div>
 
       </section>
+
+      {
+        showTicket && (
+
+          <div className="ticket-modal">
+
+            <div className="ticket-box">
+
+              <button
+                className="close-ticket"
+                onClick={() => setShowTicket(false)}
+              >
+                ×
+              </button>
+
+              <h2>
+                Event Pass 🎉
+              </h2>
+
+              <div className="ticket-info">
+
+                <p>
+                  <strong>Name:</strong>
+                  {formData.name}
+                </p>
+
+                <p>
+                  <strong>Email:</strong>
+                  {formData.email}
+                </p>
+
+                <p>
+                  <strong>Phone:</strong>
+                  {formData.phone}
+                </p>
+
+                <p>
+                  <strong>Tickets:</strong>
+                  {formData.quantity}
+                </p>
+
+                <p>
+                  <strong>Booking ID:</strong>
+                  {bookingId}
+                </p>
+
+                <p>
+                  <strong>Event:</strong>
+                  {eventTitle}
+                </p>
+
+              </div>
+
+              <div className="qr-box">
+
+                <QRCodeCanvas
+                  value={bookingId}
+                  size={170}
+                />
+
+              </div>
+
+              <button
+                className="download-btn"
+                onClick={() => window.print()}
+              >
+                Download Pass
+              </button>
+
+            </div>
+
+          </div>
+        )
+      }
 
       <Footer />
 
