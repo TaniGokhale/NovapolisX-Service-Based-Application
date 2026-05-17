@@ -8,6 +8,8 @@ import SmartServices from "./pages/SmartServices";
 import Events from "./pages/Event";
 import Contack from "./pages/Contack";
 import Booking from "./pages/Booking";
+import Admin from "./pages/Admin";
+
 function App() {
 
   return (
@@ -52,6 +54,11 @@ function App() {
 <Route
   path="/contact"
   element={<Contack />}
+/>
+
+<Route
+  path="/nova-admin-x-2026"
+  element={<Admin />}
 />
       </Routes>
       

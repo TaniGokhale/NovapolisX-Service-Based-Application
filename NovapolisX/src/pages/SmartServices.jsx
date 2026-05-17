@@ -47,6 +47,54 @@ function SmartServices() {
 
   ];
 
+  function handleService(title){
+
+    if(title === "AI City Guide"){
+
+      window.open(
+        "https://maps.google.com",
+        "_blank"
+      );
+    }
+
+    else if(title === "Emergency Help"){
+
+      window.open(
+        "https://www.apollohospitals.com/",
+        "_blank"
+      );
+    }
+
+    else if(title === "Navigation & Maps"){
+
+      window.open(
+        "https://maps.google.com",
+        "_blank"
+      );
+    }
+
+    else if(title === "Smart Parking"){
+
+      window.open(
+        "https://www.parkplus.io/",
+        "_blank"
+      );
+    }
+
+    else if(title === "Live Weather"){
+
+      window.open(
+        "https://weather.com/en-IN/weather/today/",
+        "_blank"
+      );
+    }
+
+    else if(title === "Event Booking"){
+
+      window.location.href = "/events";
+    }
+  }
+
   return (
 
     <div className="smart-page">
@@ -107,7 +155,11 @@ function SmartServices() {
                   {item.desc}
                 </p>
 
-                <button>
+                <button
+                  onClick={() =>
+                    handleService(item.title)
+                  }
+                >
                   Explore
                 </button>
 
@@ -115,6 +167,90 @@ function SmartServices() {
 
             ))
           }
+
+        </div>
+
+      </section>
+
+      <section className="extra-services-section">
+
+        <h2>
+          Smart Integrations
+        </h2>
+
+        <div className="extra-services-grid">
+
+          <div className="extra-card">
+
+            <h3>
+              Google Maps
+            </h3>
+
+            <p>
+              Navigate smart city routes
+              with real-time directions.
+            </p>
+
+            <button
+              onClick={() =>
+                window.open(
+                  "https://maps.google.com",
+                  "_blank"
+                )
+              }
+            >
+              Open Maps
+            </button>
+
+          </div>
+
+          <div className="extra-card">
+
+            <h3>
+              Live Weather
+            </h3>
+
+            <p>
+              Check live weather forecasts
+              and environmental updates.
+            </p>
+
+            <button
+              onClick={() =>
+                window.open(
+                  "https://weather.com/en-IN/weather/today/",
+                  "_blank"
+                )
+              }
+            >
+              View Weather
+            </button>
+
+          </div>
+
+          <div className="extra-card">
+
+            <h3>
+              Smart Parking
+            </h3>
+
+            <p>
+              Explore parking locations
+              and smart vehicle services.
+            </p>
+
+            <button
+              onClick={() =>
+                window.open(
+                  "https://www.parkplus.io/",
+                  "_blank"
+                )
+              }
+            >
+              Open Parking
+            </button>
+
+          </div>
 
         </div>
 

@@ -11,7 +11,15 @@ function PlaceDetails() {
 
   const { id } = useParams();
 
-  const place = placesData.find(
+  const adminPlaces =
+  JSON.parse(
+    localStorage.getItem("approvedPlaces")
+  ) || [];
+
+  const allPlaces =
+  [...placesData,...adminPlaces];
+
+  const place = allPlaces.find(
     (item) => item.id === Number(id)
   );
 

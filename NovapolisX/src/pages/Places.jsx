@@ -40,8 +40,16 @@ function Places() {
     "Hotel"
   ];
 
+  const adminPlaces =
+  JSON.parse(
+    localStorage.getItem("approvedPlaces")
+  ) || [];
+
+  const allPlaces =
+  [...placesData,...adminPlaces];
+
   const filteredPlaces =
-    placesData.filter((item) => {
+    allPlaces.filter((item) => {
 
       const matchesCategory =
         selectedCategory === "All"

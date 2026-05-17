@@ -21,10 +21,20 @@ function Event() {
   const [submitted,setSubmitted]
   = useState(false);
 
+  const approvedEvents =
+  JSON.parse(
+    localStorage.getItem("approvedEvents")
+  ) || [];
+
+  const allEvents = [
+    ...eventsData,
+    ...approvedEvents
+  ];
+
   const filteredEvents =
   selectedStatus === "All"
-  ? eventsData
-  : eventsData.filter(
+  ? allEvents
+  : allEvents.filter(
       (event) => event.status === selectedStatus
     );
 
@@ -32,7 +42,56 @@ function Event() {
 
     e.preventDefault();
 
+    const formData =
+    new FormData(e.target);
+
+    const newEvent = {
+
+      id:Date.now(),
+
+      title:
+      formData.get("title"),
+
+      image:
+      formData.get("image"),
+
+      location:
+      formData.get("location"),
+
+      date:
+      formData.get("date"),
+
+      organizer:
+      formData.get("organizer"),
+
+      description:
+      formData.get("description"),
+
+      status:"Upcoming",
+
+      time:"7:00 PM",
+
+      price:"₹499"
+    };
+
+    const oldPending =
+    JSON.parse(
+      localStorage.getItem("pendingEvents")
+    ) || [];
+
+    const updatedPending = [
+      ...oldPending,
+      newEvent
+    ];
+
+    localStorage.setItem(
+      "pendingEvents",
+      JSON.stringify(updatedPending)
+    );
+
     setSubmitted(true);
+
+    e.target.reset();
 
     setTimeout(() => {
 
@@ -274,7 +333,7 @@ function Event() {
                 className="close-modal"
                 onClick={() => setSelectedEvent(null)}
               >
-                ×
+                ✕
               </button>
 
               <img
@@ -388,12 +447,12 @@ function Event() {
 
             <div className="event-modal-box submit-form-box">
 
-             <button
-  className="close-modal"
-  onClick={() => setSelectedEvent(null)}
->
-  ✕
-</button>
+              <button
+                className="close-modal"
+                onClick={() => setShowSubmitForm(false)}
+              >
+                ✕
+              </button>
 
               <h2>
                 Submit Event Request
@@ -406,34 +465,40 @@ function Event() {
 
                 <input
                   type="text"
+                  name="title"
                   placeholder="Event Title"
                   required
                 />
 
                 <input
                   type="text"
+                  name="image"
                   placeholder="Event Image URL"
                   required
                 />
 
                 <input
                   type="text"
+                  name="location"
                   placeholder="Location"
                   required
                 />
 
                 <input
                   type="date"
+                  name="date"
                   required
                 />
 
                 <input
                   type="text"
+                  name="organizer"
                   placeholder="Organizer Name"
                   required
                 />
 
                 <textarea
+                  name="description"
                   placeholder="Event Description"
                   required
                 ></textarea>

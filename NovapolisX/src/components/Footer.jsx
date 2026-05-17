@@ -1,3 +1,5 @@
+// FOOTER COMPLETE FINAL
+
 import { Link } from "react-router-dom";
 
 import "../styles/footer.css";
@@ -34,7 +36,7 @@ function Footer() {
             Quick Links
           </h3>
 
-          <Link to="/">
+          <Link to="/home">
             Home
           </Link>
 
@@ -42,8 +44,8 @@ function Footer() {
             Places
           </Link>
 
-          <Link to="/places">
-            Explore City
+          <Link to="/events">
+            Events
           </Link>
 
           <Link to="/smart-services">
@@ -58,46 +60,63 @@ function Footer() {
             Smart Services
           </h3>
 
-          <Link to="/places">
+          <Link to="/places?category=Hospital">
             Hospitals
           </Link>
 
-          <Link to="/places">
+          <Link to="/places?category=Restaurant">
             Restaurants
           </Link>
 
-          <Link to="/places">
+          <Link to="/places?category=Tourist">
             Tourist Places
           </Link>
 
-          <Link to="/places">
+          <a
+            href="https://maps.google.com"
+            target="_blank"
+            rel="noreferrer"
+          >
             Live Navigation
-          </Link>
+          </a>
 
         </div>
 
         <div className="footer-contact">
 
-  <Link
-    to="/contact"
-    className="contact-link"
-  >
-    Contact
-  </Link>
+          <button
+            className="contact-link"
+            onClick={() =>
+              alert(
+                "Contact Page Coming Soon 🚀"
+              )
+            }
+          >
+            Contact
+          </button>
 
-  <p>
-    Nagpur, Maharashtra
-  </p>
+          <p>
+            Nagpur, Maharashtra
+          </p>
 
-  <p>
-    support@novapolisx.com
-  </p>
+          <p>
+            support@novapolisx.com
+          </p>
 
-  <p>
-    +91 7559227187
-  </p>
+          <p>
+            +91 7559227187
+          </p>
 
-</div>
+          <a
+            href="https://weather.com/en-IN/weather/today/"
+            target="_blank"
+            rel="noreferrer"
+            className="weather-link"
+          >
+            Live Weather 🌦️
+          </a>
+
+        </div>
 
       </div>
 
